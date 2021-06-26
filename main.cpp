@@ -31,8 +31,8 @@ int main(int argc, char** argv) {
         fullLine.push_back(spacer);
     }
 
-    cout << fullLine;
     lexer->Run(fullLine);
+    cout << *lexer;
 
     delete lexer;
 

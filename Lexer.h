@@ -20,7 +20,11 @@ public:
 
     void Run(std::string& input);
     
-    // TODO: add other public methods here
+    std::string toString() const;
+    friend std::ostream& operator<< (std::ostream& os, const Lexer& lexer) {
+        os << lexer.toString();
+        return os;
+    }
 
 };
 

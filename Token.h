@@ -5,7 +5,7 @@
 enum class TokenType {
     COMMA, PERIOD, Q_MARK, LEFT_PAREN, RIGHT_PAREN,
     COLON, COLON_DASH, MULTIPLY, ADD, SCHEMES,FACTS,
-    RULES, QUIERIES, ID, STRING, COMMENT, UNDEFINED,
+    RULES, QUERIES, ID, STRING, COMMENT, UNDEFINED,
     END_OF_FILE
 };
 
@@ -15,11 +15,16 @@ private:
     TokenType type;
     std::string description;
     int line;
+    std::string typeToString() const;
 
 public:
     Token(TokenType type, std::string description, int line);
 
-    // TODO: add other needed methods
+    std::string toString() const;
+    friend std::ostream& operator<< (std::ostream& os, const Token& token) {
+        os << token.toString();
+        return os;
+    }
 };
 
 #endif // TOKEN_H
