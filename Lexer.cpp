@@ -12,6 +12,9 @@ using namespace std;
 #include "MultiplyAutomaton.h"
 #include "AddAutomaton.h"
 #include "SchemesAutomaton.h"
+#include "FactsAutomata.h"
+#include "RulesAutomata.h"
+#include "QueriesAutomata.h"
 
 Lexer::Lexer() {
     CreateAutomata();
@@ -38,6 +41,9 @@ void Lexer::CreateAutomata() {
     automata.push_back(new MultiplyAutomaton());
     automata.push_back(new AddAutomaton());
     automata.push_back(new SchemesAutomaton());
+    automata.push_back(new FactsAutomaton());
+    automata.push_back(new RulesAutomaton());
+    automata.push_back(new QueriesAutomaton());
 }
 
 string Lexer::toString() const {
@@ -86,6 +92,6 @@ void Lexer::Run(std::string& input) {
 
         input.erase(0, maxRead);
     }
-    Token *currToken = new Token(TokenType::END_OF_FILE, "", lineNumber);
+    Token *currToken = new Token(TokenType::END_OF_FILE, "", lineNumber - 1);
     tokens.push_back(currToken);
 }
