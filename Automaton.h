@@ -8,6 +8,7 @@ protected:
     int inputRead = 0;
     int newLines = 0;
     int index = 0;
+    bool wasEOFReached = false;
     TokenType type;
 
 public:
@@ -30,6 +31,8 @@ public:
 
     // Every subclass must define this method
     virtual void S0(const std::string& input) = 0;
+
+    bool getEOFStatus() {return wasEOFReached;}
 
     void Serr() {
         // Indicate the input was rejected

@@ -1,8 +1,6 @@
-# COPYRIGHT © BRIGHAM YOUNG UNIVERSITY CS 236
-# FOR USE ONLY DURING SUMMER 2021 SEMESTER
-
-
-#|
+(COMMENT,"# COPYRIGHT © BRIGHAM YOUNG UNIVERSITY CS 236",1)
+(COMMENT,"# FOR USE ONLY DURING SUMMER 2021 SEMESTER",2)
+(UNDEFINED,"#|
 
 ############################################################
 ||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||
@@ -12,3 +10,6 @@
 #|
 
 #
+",4)
+(EOF,"",14)
+Total Tokens = 4
