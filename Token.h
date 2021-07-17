@@ -20,6 +20,9 @@ private:
 public:
     Token(TokenType type, std::string description, int line);
 
+    TokenType GetTokenType() {return type;}
+    std::string GetDescription() {return description;}
+
     std::string toString() const;
     friend std::ostream& operator<< (std::ostream& os, const Token& token) {
         os << token.toString();

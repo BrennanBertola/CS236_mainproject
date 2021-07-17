@@ -8,17 +8,17 @@ class Lexer
 {
 private:
     std::vector<Automaton*> automata;
-    std::vector<Token*> tokens;
 
     void CreateAutomata();
-
-    // TODO: add any other private methods here (if needed)
 
 public:
     Lexer();
     ~Lexer();
+    std::vector<Token*> tokens;
 
     void Run(std::string& input);
+    unsigned int GetTokensSize() {return tokens.size();}
+    Token GetTokenAt(int index) {return *tokens.at(index);}
     
     std::string toString() const;
     friend std::ostream& operator<< (std::ostream& os, const Lexer& lexer) {

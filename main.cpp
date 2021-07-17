@@ -1,9 +1,13 @@
 #include <iostream>
 #include <fstream>
 #include <string>
+#include <vector>
 using namespace std;
 
 #include "Lexer.h"
+#include "DatalogProgram.h"
+#include "Interpreter.h"
+
 
 int main(int argc, char** argv) {
     // check command line arguments
@@ -25,6 +29,7 @@ int main(int argc, char** argv) {
     const char spacer = '\n';
     Lexer* lexer = new Lexer();
 
+
     while (!input.eof()) {
         getline(input, currLine);
         fullLine.append(currLine);
@@ -32,9 +37,21 @@ int main(int argc, char** argv) {
     }
 
     lexer->Run(fullLine);
-    cout << *lexer;
+
+    DatalogProgram* datalog = new DatalogProgram(lexer);
+    try {
+        datalog->Run();
+    } catch (string e) {
+        cout << e;
+    }
+
+    Interpreter* interpreter = new Interpreter(datalog);
+
+    interpreter->Run();
 
     delete lexer;
+    delete datalog;
+    delete interpreter;
 
     return 0;
 }
