@@ -45,12 +45,13 @@ void Relation::Select2(unsigned int position1, unsigned int position2) {
 }
 
 void Relation::Project(vector<int> positions) {
+    unsigned int headerSize = header.GetSize();
     for (unsigned int i = 0; i < positions.size(); ++i) {
         string tmp = header.GetAttribute(i);
         header.SetAttribute(i, header.GetAttribute(positions.at(i)));
         header.SetAttribute(positions.at(i), tmp);
     }
-    for (unsigned int i = 0; i < header.GetSize() - positions.size(); ++i) {
+    for (unsigned int i = 0; i < headerSize - positions.size(); ++i) {
         header.PopBack();
     }
 
@@ -59,13 +60,14 @@ void Relation::Project(vector<int> positions) {
     vector<Tuple> newTuples;
     while (it != tuples.end()) {
         Tuple tmpTuple = *it;
+        unsigned int tupleSize = tmpTuple.GetSize();
 
         for (unsigned int i = 0; i < positions.size(); ++i) {
             string tmp = tmpTuple.GetValue(i);
             tmpTuple.SetValue(i, tmpTuple.GetValue(positions.at(i)));
             tmpTuple.SetValue(positions.at(i), tmp);
         }
-        for (unsigned int i = 0; i < tmpTuple.GetSize() - positions.size(); ++i) {
+        for (unsigned int i = 0; i < tupleSize - positions.size(); ++i) {
             tmpTuple.PopBack();
         }
 
