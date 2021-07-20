@@ -1,36 +1,30 @@
 # COPYRIGHT © BRIGHAM YOUNG UNIVERSITY CS 236
 # FOR USE ONLY DURING SUMMER 2021 SEMESTER
-# passoffInput20     SUCCESS
-# This tests their 'success' with a few comments tokens now and then
-  #Schemes: 
-Schemes: 
-  #student(N, I, A, M)
-student(N, I, A, M)
-  #WhoMajor(N,M)
-WhoMajor(N,M)
-
-Facts: 
-  #Facts: 
-student('Roosevelt', '51', '10 Main', 'Econ').
-student('Roosevelt', '51', '10 Main', 'Econ').
-  #student('Roosevelt', '51', '10 Main', 'Econ').
-student('Reagan','52', '11 Maple', 'Econ').
-  #student('Reagan','52', '11 Maple', 'Econ').
-student('G.W.Bush','53','12 Ashton', 'AgriSci').
-  #student('G.W.Bush','53','12 Ashton', 'AgriSci').
-student('Clinton','54','', 'Lying').
-  #student('Clinton','54','', 'Lying').
-
-  #Rules:
-Rules:
-  #WhoMajor(N,M):-student(N,I,A,M).
-WhoMajor(N,M):-student(N,I,A,M).
-
-Queries:
-  #Queries:
-WhoMajor('Roosevelt',N)?WhoMajor(M,'Econ')?
-  #WhoMajor('Roosevelt',N)?WhoMajor(M,'Econ')?
-WhoMajor('George Washington','PoliSci')?
-  #WhoMajor('George Washington','PoliSci')?
-WhoMajor('Abraham Lincoln','Law')?student('John Adams', I, A, M)?
-  #WhoMajor('Abraham Lincoln','Law')?student('John Adams', I, A, M)? 
+Schemes:DeaUoo(H,I,J,K,L,M,N)
+DeaVoo(H,I,J,K,L,M,N)
+DeaWoo(H,I,J,K,L,M,N)
+Facts:DeaWoo('a','a','a','a','a','a','b').
+DeaWoo('a','b','a','a','a','a','b').
+DeaWoo('a','c','a','a','a','a','b').
+DeaWoo('a','d','a','a','a','a','b').
+DeaWoo('a','e','a','a','a','a','b').
+DeaWoo('a','a','a','a','a','f','b').
+DeaWoo('a','a','a','a','a','g','b').
+DeaWoo('a','k','a','a','a','h','b').
+DeaUoo('a','a','c','a','a','a','b').
+DeaUoo('a','b','a','a','a','a','b').
+DeaUoo('a','a','a','a','a','a','b').
+DeaVoo('a','a','a','s','a','a','b').
+DeaVoo('r','a','a','a','a','a','b').
+DeaVoo('x','a','a','a','a','a','b').
+DeaVoo('d','a','a','a','a','a','b').
+DeaVoo('z','a','a','a','a','a','b').
+DeaVoo('b','a','a','a','a','a','b').
+Rules:DeaVoo(A,B,C,D,E,F,G) :- DeaWoo(A,'B',C,D,E,F,G).
+Queries:DeaUoo(A,B,C,D,E,F,G)?
+DeaVoo(A,B,'a',D,E,F,G)?
+DeaUoo(A,B,'b',D,E,F,G)?
+DeaWoo(A,B,'a',D,E,F,Applestrudle)?
+DeaWoo(A,B,'a',D,E,F,G)?
+DeaWoo('a','a','a','a','a','a','b')?
+ 

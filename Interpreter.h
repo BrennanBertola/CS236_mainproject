@@ -2,6 +2,7 @@
 #define MAINPROJECT_INTERPRETER_H
 
 #include <vector>
+#include <sstream>
 
 #include "DatalogProgram.h"
 #include "Database.h"
@@ -18,6 +19,8 @@ private:
 
     Header CreatHeader(Predicate* scheme);
     Tuple CreatTuple(Predicate* fact);
+
+    void ProcessQueries();
 public:
     Interpreter () {};
     ~Interpreter() {delete database;}
@@ -25,6 +28,16 @@ public:
 
     void Run();
 
+    std::string toString() const {
+        std::ostringstream out;
+        out << *database;
+        return out.str();
+    }
+
+    friend std::ostream& operator<< (std::ostream& os, const Interpreter& interpreter) {
+        os << interpreter.toString();
+        return os;
+    }
 };
 
 

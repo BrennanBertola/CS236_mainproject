@@ -14,7 +14,20 @@ public:
 
     void AddRelation(const std::string name, Header header);
     void AddTuple(const std::string name, Tuple tuple);
+    void ProcessQuery(Predicate* query);
 
+    std::string toString() const {
+        std::map<std::string, Relation*>::const_iterator it;
+        std::ostringstream out;
+        for (it = relations.begin(); it != relations.end(); ++it) {
+            out << *it->second;
+        }
+        return out.str();
+    }
+    friend std::ostream& operator<< (std::ostream& os, const Database& base) {
+        os << base.toString();
+        return os;
+    }
 };
 
 

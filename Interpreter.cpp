@@ -37,6 +37,12 @@ Tuple Interpreter::CreatTuple(Predicate *fact) {
     return currTuple;
 }
 
+void Interpreter::ProcessQueries() {
+    for (unsigned int i = 0; i < queries.size(); ++i) {
+        database->ProcessQuery(queries.at(i));
+    }
+}
+
 void Interpreter::Run() {
     for (unsigned int i = 0; i < schemes.size(); ++i) {
         Header tmp = CreatHeader(schemes.at(i));
@@ -47,4 +53,6 @@ void Interpreter::Run() {
         Tuple tmp = CreatTuple(facts.at(i));
         database->AddTuple(facts.at(i)->GetInitial(), tmp);
     }
+
+    ProcessQueries();
 }

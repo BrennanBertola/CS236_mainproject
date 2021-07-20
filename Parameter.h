@@ -7,14 +7,23 @@
 class Parameter {
 private:
     TokenType type;
+    bool isConstant;
     std::string description;
 public:
     Parameter(TokenType type, std::string description) {
         this->type = type;
         this->description = description;
+
+        if(type == TokenType::STRING) {
+            isConstant = true;
+        }
+        else {
+            isConstant = false;
+        }
     }
 
     std::string GetDescription() {return description;}
+    bool IsConstant() {return isConstant;}
 
     std::string toString() const {
         std::ostringstream out;
