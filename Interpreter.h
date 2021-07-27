@@ -20,9 +20,13 @@ private:
     Header CreatHeader(Predicate* scheme);
     Tuple CreatTuple(Predicate* fact);
 
+    void ProcessRules();
+    bool ProcessRule(Rule* currRule);
+    int rulesPassThrough;
+
     void ProcessQueries();
 public:
-    Interpreter () {};
+    Interpreter () {rulesPassThrough = 0;};
     ~Interpreter() {delete database;}
     Interpreter (DatalogProgram* datalog);
 

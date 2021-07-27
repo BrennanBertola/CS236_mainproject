@@ -19,6 +19,8 @@ public:
     std::string GetAttribute(unsigned int index) const {return attributes.at(index);}
     void SetAttribute(unsigned int index, std::string input) {attributes.at(index) = input;}
     void PopBack() {attributes.pop_back();}
+    void SetHeader(vector<string>attributes) {swap(this->attributes, attributes);}
+
 };
 
 #endif //MAINPROJECT_HEADER_H

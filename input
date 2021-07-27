@@ -1,40 +1,27 @@
 # COPYRIGHT © BRIGHAM YOUNG UNIVERSITY CS 236
 # FOR USE ONLY DURING SUMMER 2021 SEMESTER
 Schemes:
-   childOf(A,B)
-   marriedTo(A,B)
-   siblings(W,X,Y,Z)
+   f(a,b)
+   g(c,d)
+   r(e,f)
 
 Facts:
-   marriedTo('Zed','Bea').
-   marriedTo('Bea','Zed').
-   childOf('Jill','Zed').
-   childOf('Ned','Bea').
-   childOf('Tim','Bea').
-   childOf('Zed','Zed').
-   siblings('Jill','Zed','Tim','Zed').
-   childOf('George Foreman','George Foreman').
-   childOf('George Foreman','George Foreman').
-   childOf('George Foreman','George Foreman').
-   childOf('George Foreman','George Foreman').
-   childOf('George Foreman','George Foreman').
-   childOf('George Foreman','George Foreman').
-   childOf('George Foreman','George Foreman').
-   childOf('George Foreman','George Foreman').
-   siblings('George Foreman','George Foreman','George Foreman','George Foreman').
-   siblings('George Foreman','George Foreman','George Foreman','George Foreman').
-   siblings('George Foreman','George Foreman','George Foreman','George Foreman').
-   siblings('Tod','Tod','George Foreman','Tod').
+   f('1','2').
+   f('4','3').
+   g('3','2').
+   r('3','5').
 
 Rules:
-   childOf(X,Y):-childOf(X,Z),marriedTo(Y,Z).
-   marriedTo(X,Y):-marriedTo(Y,X).
+   r(E,F):-f(E,F).
+   g(C,D):-f(C,X),r(X,D).
 
 Queries:
-   marriedTo(Y,X)?
-   childOf(Y,Y)?
-   childOf(Y,'Bea')?
-   siblings(A,B,B,A)?
-   siblings(A,C,'George Foreman',A)?
+   g('4',B)?
+   r(E,'3')?
+   f(A,B)?
+   g(A,B)?
+   r(A,B)?
+
+
 
  

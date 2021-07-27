@@ -18,7 +18,11 @@ public:
     unsigned int GetSize() const {return values.size();}
     std::string GetValue(unsigned int index) const {return values.at(index);}
     void SetValue(unsigned int index, std::string value) {values.at(index) = value;}
+    void SetTuple(vector<std::string> values) {swap(this->values, values);}
+    void PushBack(std::string value) {values.push_back(value);}
     void PopBack() {values.pop_back();}
+
+
 };
 
 #endif //MAINPROJECT_TUPLE_H

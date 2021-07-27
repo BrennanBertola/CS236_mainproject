@@ -15,6 +15,9 @@ public:
     void AddRelation(const std::string name, Header header);
     void AddTuple(const std::string name, Tuple tuple);
     void ProcessQuery(Predicate* query);
+    Relation ProcessPredicate(Predicate* predicate);
+
+    bool Union(Relation unionRelation, string name);
 
     std::string toString() const {
         std::map<std::string, Relation*>::const_iterator it;

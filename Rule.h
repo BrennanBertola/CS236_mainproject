@@ -15,9 +15,18 @@ public:
     void SetHead(Predicate predicate) {
         headPredicate = predicate;
     }
+    std::string GetName() {return headPredicate.GetInitial();}
+    unsigned int GetHeadSize() {return headPredicate.ParameterSize();}
+    std::string GetHeadAt(unsigned int index) {
+        return headPredicate.GetParameterAt(index).GetDescription();
+    }
+
     void AddPredicate(Predicate input) {
         predicates.push_back(input);
     }
+
+    unsigned int PredicatesSize() {return predicates.size();}
+    Predicate* GetPredicate(unsigned int index) {return &predicates.at(index);}
 
     std::string toString() const {
         std::ostringstream out;

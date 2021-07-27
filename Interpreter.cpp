@@ -3,6 +3,7 @@ using namespace std;
 
 Interpreter::Interpreter(DatalogProgram *datalog) {
     this->datalog = datalog;
+    rulesPassThrough = 0;
 
     for (unsigned int i = 0; i < datalog->GetSchemesSize(); ++i) {
         schemes.push_back(datalog->GetSchemeAt(i));
@@ -38,9 +39,58 @@ Tuple Interpreter::CreatTuple(Predicate *fact) {
 }
 
 void Interpreter::ProcessQueries() {
+    cout << "Query Evaluation" << endl;
     for (unsigned int i = 0; i < queries.size(); ++i) {
         database->ProcessQuery(queries.at(i));
     }
+}
+
+void Interpreter::ProcessRules() {
+    bool wasInsert = false;
+    for (unsigned int i = 0; i < rules.size(); ++i) {
+        cout << *rules.at(i) << endl;
+        if (ProcessRule(rules.at(i)) == true) {
+            wasInsert = true;
+        }
+    }
+
+    ++rulesPassThrough;
+    if (wasInsert) {
+        ProcessRules();
+    }
+    else {
+        cout << "\nSchemes populated after " << rulesPassThrough;
+        cout << " passes through the Rules.\n" << endl;
+    }
+}
+
+bool Interpreter::ProcessRule(Rule* currRule) {
+    vector<Relation> newRelations;
+    vector<int> projectOrder;
+    for (unsigned int i = 0; i < currRule->PredicatesSize(); ++i) {
+        Predicate* tmpPredicate = currRule->GetPredicate(i);
+        newRelations.push_back(database->ProcessPredicate(tmpPredicate));
+    }
+
+    Relation joinRelation = newRelations.at(0);
+    for (unsigned int i = 1; i < newRelations.size(); ++i) {
+        joinRelation.Join(newRelations.at(i));
+    }
+
+    for (unsigned int i = 0; i < currRule->GetHeadSize(); ++i) {
+        for (unsigned int j = 0; j < joinRelation.GetHeaderSize(); ++j) {
+            if (joinRelation.GetHeaderAt(j) == currRule->GetHeadAt(i)) {
+                projectOrder.push_back(j);
+                break;
+            }
+        }
+    }
+
+    joinRelation.Project(projectOrder);
+    if (database->Union(joinRelation, currRule->GetName())) {
+        return true;
+    }
+    return false;
 }
 
 void Interpreter::Run() {
@@ -54,5 +104,7 @@ void Interpreter::Run() {
         database->AddTuple(facts.at(i)->GetInitial(), tmp);
     }
 
+    cout << "Rule Evaluation" << endl;
+    ProcessRules();
     ProcessQueries();
 }
