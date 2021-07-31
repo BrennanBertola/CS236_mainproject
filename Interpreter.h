@@ -6,6 +6,7 @@
 
 #include "DatalogProgram.h"
 #include "Database.h"
+#include "Graph.h"
 
 class Interpreter {
 private:
@@ -17,11 +18,15 @@ private:
     std::vector<Predicate*> queries;
     std::vector<Rule*> rules;
 
+    Graph graph;
+
     Header CreatHeader(Predicate* scheme);
     Tuple CreatTuple(Predicate* fact);
 
     void ProcessRules();
     bool ProcessRule(Rule* currRule);
+    std::string PrintSCC(std::set<int>& scc) const;
+    bool RunOnce(set<int> scc, int vertex);
     int rulesPassThrough;
 
     void ProcessQueries();

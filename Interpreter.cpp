@@ -20,6 +20,8 @@ Interpreter::Interpreter(DatalogProgram *datalog) {
     for (unsigned int i = 0; i < datalog->GetRulesSize(); ++i) {
         rules.push_back(datalog->GetRuleAt(i));
     }
+
+    this->graph = Graph(rules);
 }
 
 Header Interpreter::CreatHeader(Predicate *scheme) {
@@ -46,22 +48,39 @@ void Interpreter::ProcessQueries() {
 }
 
 void Interpreter::ProcessRules() {
-    bool wasInsert = false;
-    for (unsigned int i = 0; i < rules.size(); ++i) {
-        cout << *rules.at(i) << endl;
-        if (ProcessRule(rules.at(i)) == true) {
-            wasInsert = true;
-        }
+    graph.Run();
+
+    cout << endl << "Rule Evaluation" << endl;
+    for (unsigned int i = 0; i < graph.sccs.size(); ++i) {
+        bool wasInsert;
+        bool runOnce = RunOnce(graph.sccs.at(i), i);
+        rulesPassThrough = 0;
+
+        cout << "SCC: " << PrintSCC(graph.sccs.at(i)) << endl;
+
+        do {
+            set<int>::iterator it = graph.sccs.at(i).begin();
+            wasInsert = false;
+
+            while (it != graph.sccs.at(i).end()) {
+                cout << *rules.at(*it) << endl;
+                if (ProcessRule(graph.RuleAtVertex(*it)) == true) {
+                    wasInsert = true;
+                }
+                ++it;
+            }
+
+            ++rulesPassThrough;
+            if (runOnce || !wasInsert) {
+                cout << rulesPassThrough << " passes: "
+                     << PrintSCC(graph.sccs.at(i)) << endl;
+                break;
+            }
+
+        } while (wasInsert == true);
     }
 
-    ++rulesPassThrough;
-    if (wasInsert) {
-        ProcessRules();
-    }
-    else {
-        cout << "\nSchemes populated after " << rulesPassThrough;
-        cout << " passes through the Rules.\n" << endl;
-    }
+    cout << endl;
 }
 
 bool Interpreter::ProcessRule(Rule* currRule) {
@@ -93,6 +112,30 @@ bool Interpreter::ProcessRule(Rule* currRule) {
     return false;
 }
 
+string Interpreter::PrintSCC(std::set<int>& scc) const {
+    ostringstream out;
+    set<int>::iterator it = scc.begin();
+    while (it != scc.end()) {
+        out << 'R' << *it;
+        ++it;
+        if (it != scc.end()) {
+            out << ',';
+        }
+    }
+    return out.str();
+}
+
+bool Interpreter::RunOnce(set<int> scc, int vertex) {
+    set<int>::iterator it = scc.begin();
+    if (scc.size() != 1) {
+        return false;
+    }
+    else if (!graph.CheckDependence(*it)) {
+        return true;
+    }
+    return false;
+}
+
 void Interpreter::Run() {
     for (unsigned int i = 0; i < schemes.size(); ++i) {
         Header tmp = CreatHeader(schemes.at(i));
@@ -104,7 +147,6 @@ void Interpreter::Run() {
         database->AddTuple(facts.at(i)->GetInitial(), tmp);
     }
 
-    cout << "Rule Evaluation" << endl;
     ProcessRules();
     ProcessQueries();
 }
